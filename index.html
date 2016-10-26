@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+
+<html data-ng-app="angularApplication">
+<head>
+<title>Mappa Desio</title>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+<link href="angular.panels.min.css" rel="stylesheet" type="text/css">
+
+<script src="https://maps.google.com/maps/api/js?libraries=placeses,visualization,drawing,geometry,places&key=AIzaSyDqrDjL6eFlE2Nho-BZ1ZYmfAxMAAgGrSo"></script>
+<script src="https://code.angularjs.org/1.3.15/angular.min.js"></script>
+<script src="ng-map.min.js"></script>
+<script src="angular.panels.min.js"></script>
+<style>
+  ng-map {
+  position:absolute;
+  width: 100%;
+  height: 100%;
+}
+.modal {
+  display: block;
+  z-index: -1;
+}
+.modal.fade.in {
+  z-index: 1050;
+}
+</style>
+</head>
+
+<body data-ng-controller="defaultController">
+ <!-- <div ng-repeat="f in pois">
+  <p>{{f.catasto_data[0].geometry.rings[0]}}</p>
+ </div>-->
+  <ng-map   map-type-control="true" map-type-control-options="{position:'TOP_CENTER'}"  default-style="false" zoom="14" center="45.618600, 9.207690" >
+	<marker position="current" animation="Animation.BOUNCE" title="Tua posizione" icon="{url:'man.png'}"></marker>
+	 <shape ng-repeat="f in pois" name="polygon"
+       
+       paths="{{f.catasto_data[0].geometry.rings[0]}}"
+       stroke-color="#FF0000"
+       stroke-opacity="0.8"
+       stroke-weight="2"
+       fill-color="#FF0000"
+       fill-opacity="0.35">
+     </shape>
+	 <shape name="polygon" paths="[[9.209840426262042,45.604289135057535],[9.209896925209112,45.604299193361015],[9.210045521664052,45.60432603116948],[9.210093496449629,45.60419647387205],[9.210115890904218,45.60413593715227],[9.210016684275885,45.604117740490615],[9.20996517961882,45.60410924823709],[9.209981171831991,45.60406496106336],[9.209923798867706,45.60405464337903],[9.209907729377292,45.6040985076411],[9.209885539781922,45.60415901604106],[9.20986937962308,45.60420299747615],[9.209840426262042,45.604289135057535]]" stroke-color="#FF0000" stroke-opacity="0.8" stroke-weight="2" fill-color="#FF0000" fill-opacity="0.35"> </shape>
+	<shape name="polygon"
+       
+       paths="[
+         [25.774252, -80.190262],
+         [18.466465, -66.118292],
+         [32.321384, -64.75737]
+       ]"
+       stroke-color="#FF0000"
+       stroke-opacity="0.8"
+       stroke-weight="2"
+       fill-color="#FF0000"
+       fill-opacity="0.35">
+
+	<custom-control id="title" position="TOP_LEFT" index="1">
+	<div style="padding: 10px;">
+	<h3><b>Città di Desio</b></h3>
+	
+	</div>
+	</custom-control>    
+	<custom-control id="by" position="BOTTOM_LEFT" index="1">
+		<div style="padding: 10px;">Created by Paolo Fisco @ipersoft</div>
+	</custom-control> 
+	
+  </ng-map>
+
+	<div data-panels="true"></div>
+
+	<script>
+
+		var app = angular.module('angularApplication', ['angular.panels','ngMap']);
+
+		//add panels
+		app.config(['panelsProvider','$windowProvider', function (panelsProvider,$windowProvider) {
+		var $window = $windowProvider.$get();
+		var sizePanel="";
+		if ($window.innerWidth<400) {
+			sizePanel="80%"
+		}
+		else
+		{
+			sizePanel="400px"
+		}
+		
+			panelsProvider
+		        .add({
+		            id: 'panel',
+		            position: 'left',
+		            size:sizePanel,
+		            templateUrl: 'https://github.com/infocitta/mappadesio_old/blob/gh-pages/panel.html',
+		            controller: 'leftCtrl'
+		        })
+		        ;
+		}]);
+
+		//default controller
+		app.controller('defaultController', ['$scope', 'panels','NgMap','$http','$window', function ($scope, panels,NgMap,$http,$window) {
+
+		NgMap.getMap().then(function(map) {
+			$scope.map = map;
+		});
+$http.get("https://raw.githubusercontent.com/infocitta/mappadesio_old/gh-pages/fab.json")
+    .then(function(response) {
+        $scope.pois = response.data;
+    });	
+
+  $scope.showPOI = function(event, poi) {
+    $scope.selectedPOI = poi;
+	panels.open("panel");
+    //$scope.map.showInfoWindow('myInfoWindow', this);
+  };		
+		
+			$scope.leftOpen = function (event,poi,cat) {
+				$scope.$broadcast('leftHello',poi,cat);
+			};
+		}]);
+
+		//left panel controller
+		app.controller('leftCtrl', ['$scope', 'panels', function ($scope, panels) {
+
+			$scope.$on('leftHello', function(event, poi,cat) {
+				$scope.selectedPOI = poi;
+				$scope.selectedCAT = cat;
+				panels.open("panel");
+			});
+	
+		}]);
+
+
+
+	</script>
+</body>
+</html>

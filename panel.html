@@ -1,0 +1,17 @@
+<div class="pane-head" style="padding: 10px;">
+	<button type="button" class="close" data-ng-click="panels.close();">x</button>
+</div>
+
+<div class="pane-body" style="padding: 10px;">
+	<div style="padding: 10px;background-color: white;"><img ng-src="{{selectedCAT.Icon}}">{{selectedCAT.Category}}</div>
+	<h4>{{selectedPOI.Address}}</h4>
+	<small>{{selectedPOI.Note}}</small>
+	<div>
+	<a ng-href="https://www.google.com/maps?q={{selectedPOI.Latitude}},{{selectedPOI.Longitude}}" class="btn btn-primary btn-sm" role="button">Posizione</a>
+	<a ng-href="https://www.google.com/maps/dir/Current+Location/{{selectedPOI.Latitude}},{{selectedPOI.Longitude}}" class="btn btn-primary btn-sm" role="button">Indicazioni</a>
+	</div>
+	<div>
+		<button type="button" class="close" data-ng-click="panels.close();">Chiudi</button>
+	</div>
+</div> 
+
