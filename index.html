@@ -92,7 +92,7 @@
 		            id: 'panel',
 		            position: 'left',
 		            size:sizePanel,
-		            templateUrl: 'https://github.com/infocitta/mappadesio_old/blob/gh-pages/panel.html',
+		            templateUrl: 'https://raw.githubusercontent.com/infocitta/fabbricati/master/panel.html',
 		            controller: 'leftCtrl'
 		        })
 		        ;
@@ -104,7 +104,7 @@
 		NgMap.getMap().then(function(map) {
 			$scope.map = map;
 		});
-$http.get("https://raw.githubusercontent.com/infocitta/mappadesio_old/gh-pages/fab.json")
+$http.get("https://raw.githubusercontent.com/infocitta/fabbricati/master/fab.json")
     .then(function(response) {
         $scope.pois = response.data;
     });	
