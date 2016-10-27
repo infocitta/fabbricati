@@ -29,14 +29,12 @@
 </head>
 
 <body data-ng-controller="defaultController">
- <!-- <div ng-repeat="f in pois">
-  <p>{{f.catasto_data[0].geometry.rings[0]}}</p>
- </div>-->
+
   <ng-map   map-type-control="true" map-type-control-options="{position:'TOP_CENTER'}"  default-style="false" zoom="14" center="45.618600, 9.207690" >
 	<marker position="current" animation="Animation.BOUNCE" title="Tua posizione" icon="{url:'man.png'}"></marker>
 	 <shape ng-repeat="f in pois" name="polygon"
-       
-       paths="{{f.catasto_data[0].geometry.rings[0]}}"
+       on-click="leftOpen(event,f)"
+       paths="{{f.Geometry.rings[0]}}"
        stroke-color="#FF0000"
        stroke-opacity="0.8"
        stroke-weight="2"
@@ -92,7 +90,7 @@
 		NgMap.getMap().then(function(map) {
 			$scope.map = map;
 		});
-$http.get("https://raw.githubusercontent.com/ipersoft/opendata/master/immobili-comunali/fabbricati--with-catasto-data.json")
+$http.get("https://raw.githubusercontent.com/infocitta/fabbricati/master/fab.json")
     .then(function(response) {
         $scope.pois = response.data;
     });	
@@ -103,17 +101,16 @@ $http.get("https://raw.githubusercontent.com/ipersoft/opendata/master/immobili-c
     //$scope.map.showInfoWindow('myInfoWindow', this);
   };		
 		
-			$scope.leftOpen = function (event,poi,cat) {
-				$scope.$broadcast('leftHello',poi,cat);
+			$scope.leftOpen = function (event,poi) {
+				$scope.$broadcast('leftHello',poi);
 			};
 		}]);
 
 		//left panel controller
 		app.controller('leftCtrl', ['$scope', 'panels', function ($scope, panels) {
 
-			$scope.$on('leftHello', function(event, poi,cat) {
-				$scope.selectedPOI = poi;
-				$scope.selectedCAT = cat;
+			$scope.$on('leftHello', function(event, poi) {
+				$scope.selectedPOI = poi;				
 				panels.open("panel");
 			});
 	
