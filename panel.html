@@ -4,9 +4,13 @@
 
 <div class="pane-body" style="padding: 10px;">
 
-	<div style="width: 400px;">
+	<div style="width: 380px;">
 	  <table class="table" ng-repeat="f in selectedPOI.FABBRICATI">
 	    <tbody>
+	      <tr>
+		<th>N. inventario</th>
+		<td>{{f.N_INVENT}}</td>
+		</tr>		    
 	      <tr>
 		<th>Tipologia</th>
 		<td>{{f.TIPOLOGIA}}</td>
@@ -19,6 +23,26 @@
 		<th>Descrizione</th>
 		<td>{{f.DESCRIZIONE}}</td>		      
 	    </tr>
+		<tr>
+		<th>Indirizzo</th>
+		<td>{{f.INDIRIZZO}}</td>		      
+	    </tr>
+		<tr>
+		<th>Localita'</th>
+		<td>{{f.LOCALITA}}</td>		      
+	    </tr>
+		<tr>
+		<th>Foglio</th>
+		<td>{{f.FG}}</td>		      
+	    </tr>
+		<tr>
+		<th>Mappale</th>
+		<td>{{f.MAPPALE}}</td>		      
+	    </tr>
+		<tr>
+		<th>SUB</th>
+		<td>{{f.SUB}}</td>		      
+	    </tr>		    
 	    </tbody>
 	  </table>
 	</div>	
