@@ -5,15 +5,15 @@
 <div class="pane-body" style="padding: 10px;">
 
 	<div class="container">
-	  <table class="table">
+	  <table class="table" ng-repeat="f in selectedPOI.FABBRICATI">
 	    <tbody>
-	      <tr ng-repeat="f in selectedPOI.FABBRICATI">
+	      <tr>
 		<th>Tipologia</th>
-		<td>{{selectedPOI.TIPOLOGIA}}</td>
+		<td>{{f.TIPOLOGIA}}</td>
 		<th>Denominazione</th>
-		<td>{{selectedPOI.DENOMINAZIONE}}</td>		      
+		<td>{{f.DENOMINAZIONE}}</td>		      
 		<th>Descrizione</th>
-		<td>{{selectedPOI.DESCRIZIONE}}</td>		      
+		<td>{{f.DESCRIZIONE}}</td>		      
 	    </tr>
 	    </tbody>
 	  </table>
