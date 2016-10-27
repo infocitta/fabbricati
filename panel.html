@@ -5,7 +5,7 @@
 <div class="pane-body" style="padding: 10px;">
 
 	<div style="width: 380px;">
-	  <table class="table table-bordered" ng-repeat="f in selectedPOI.FABBRICATI">
+	  <table class="table table-bordered" ng-repeat="f in selectedPOI.FABBRICATI | orderBy:'N_INVENT'" ">
 	    <tbody>
 	      <tr>
 		<th>N. inventario</th>
